@@ -1,13 +1,11 @@
-import axios from "axios";
+import axios from "axios"
 
 export const apiImages = async () => {
-    try{
-        const data = await axios.get('https://jsonplaceholder.typicode.com/photos')
-        //console.log(data.data)
-        return data.data 
-    } catch (error) {
-        console.log(`Error en la API ${error}`)
-        return []
-    }
-
+  try {
+    const response = await axios.get('https://jsonplaceholder.typicode.com/photos?_limit=20')
+    return response.data
+  } catch (error) {
+    console.log(`Error en la API ${error}`)
+    return []
+  }
 }

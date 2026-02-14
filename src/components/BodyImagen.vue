@@ -1,19 +1,22 @@
 <template>
     <div>
-        <h4>Imagenes:</h4>
+        <h4>{{ imagen.title }}</h4>
+
+        <img :src="imagen.thumbnailUrl" alt="aaaa">
     </div>
 </template>
 
-<script setup>
-import { updateImages } from '@/stores/counter';
-import { onMounted } from 'vue';
+<script setup lang="ts">
 
-const dataImagen = updateImages()
-
-
-onMounted(() => {
-    dataImagen.updatedata()
-})
+defineProps<{
+    imagen: {
+        albumId: number,
+        id : number,
+        thumbnailUrl: string,
+        title : string,
+        url : string
+    }
+}>()
 
 </script>
 
