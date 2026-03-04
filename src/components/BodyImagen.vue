@@ -149,10 +149,8 @@ const filtrarUsers = computed(() => {
     }
   })
 
-  users = users.map(p => {return { ...p, rankingUnique: p.id * 2}})
+  users = users.map(p => {return { ...p, rankingUnique: p.id * Math.floor((Math.random() * 10))}})
     
-  
-
   return users
 })
 
@@ -214,7 +212,6 @@ watch(filtrarUsers , (users) => {
     console.warn('HAY MENOS DE 3 USUARIOS')
   }
 
-
 })
 
 watch( counterUsers , (actual) => {
@@ -227,7 +224,7 @@ watch( counterUsers , (actual) => {
 
 <style>
 
-.users{
+.usersx{
   margin: 5px;
   padding: 10px;
   background: #08aabf29;
@@ -236,7 +233,7 @@ watch( counterUsers , (actual) => {
   justify-content: center;
 }
 
-.cabecera{
+.cabecerax{
   display: flex;
   flex-direction: column;
 }

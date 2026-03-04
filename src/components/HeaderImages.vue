@@ -213,14 +213,14 @@ watch(promedioPuntuacion, (nuevoPromedio) => {
 })
 </script>
 
-<style>
-.container {
+<style> 
+.containerx {
   max-width: 800px;
   margin: auto;
   font-family: Arial, sans-serif;
 }
 
-.card {
+.cardx {
   border: 1px solid #ccc;
   padding: 10px;
   margin-bottom: 15px;
