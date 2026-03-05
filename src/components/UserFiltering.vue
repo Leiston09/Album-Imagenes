@@ -1,24 +1,29 @@
 <template>
+    <div class=" flex justify-center ">
+        <button class="bg-amber-300 p-2 m-5" @click="toggleLanguage">
+        {{ language === 'es' ? 'English' : 'Español' }}
+        </button>        
+    </div>
 
     <section class="Users-Filters">
         <div class="m-10 flex flex-col">
             <div class="flex justify-end">
                 <button class=" bg-red-400 p-1" @click="viewToggleUsers">
                     <strong>
-                    {{ toggleView ? 'Business Cards' : 'Table Visualization' }}                    
+                    {{ toggleView ? text('BusinessCards'): text('TableVisualization') }}                    
                     </strong>
                 </button>
             </div>
             <div>
-                <strong> Buscar Usuario</strong>
+                <strong>{{ text('searchUser') }}</strong>
             </div>
 
-            <input class=" bg-emerald-100 p-1 border-2 border-blue-400 mb-5" type="text" v-model="searchUsername" placeholder="Enter full name">
+            <input class=" bg-emerald-100 p-1 border-2 border-blue-400 mb-5" type="text" v-model="searchUsername" :placeholder="text('inputSearchUser')">
             <div class=" flex">
                 <div>
-                    <strong>Buscar por País : </strong>
+                    <strong>{{text('searchCountry')}} </strong>
                     <select class="border-2 border-blue-400 bg-amber-50" v-model="searchUserCountry">
-                        <option value="">Select on opction</option>
+                        <option value="">{{ text('selectOption') }}</option>
                         <option v-for="countries in availableCountries"
                         :key="countries"
                         :value="countries">
@@ -27,9 +32,9 @@
                     </select>                
                 </div>
                 <div class=" ms-4">
-                    <strong>Buscar por State : </strong>
+                    <strong>{{ text('searchState') }}</strong>
                     <select class="border-2 border-blue-400 bg-amber-50" v-model="searchUsersState">
-                        <option value="">Select on opction</option>
+                        <option value="">{{ text('selectOption') }}</option>
                         <option v-for="state in availableState"
                         :key="state"
                         :value="state">
@@ -39,9 +44,9 @@
                 </div>                
             </div>
             <div class="flex items-center justify-center">
-                <button  class=" bg-green-200 m-5 p-2" @click="currentOrder(null)">Standard filter</button>
-                <button  class=" bg-green-200 m-5 p-2" @click="currentOrder('ASC')">Upstream filter (ASC)</button>
-                <button  class=" bg-green-200 m-5 p-2" @click="currentOrder('DESC')">Down-filter (DESC)</button>
+                <button  class=" bg-green-200 m-5 p-2" @click="currentOrder(null)">{{ text('standardFilter') }}</button>
+                <button  class=" bg-green-200 m-5 p-2" @click="currentOrder('ASC')">{{ text('ascFilter') }}</button>
+                <button  class=" bg-green-200 m-5 p-2" @click="currentOrder('DESC')">{{ text('descFilter') }}</button>
             </div>
 
 
@@ -49,12 +54,12 @@
     </section>
 
     <section class="UsersCalculation">
-        <p><strong>Promedio puntuacion : </strong>{{ usersCalculation }}</p>
-        <p><strong>Users Asset : </strong>{{ userStateCalculation.Asset }}</p>
-        <p><strong>Users Idle : </strong>{{ userStateCalculation.idle }}</p>
-        <p><strong>user with the highest score: </strong> 
+        <p><strong>{{ text('avgScore') }} : </strong>{{ usersCalculation }}</p>
+        <p><strong>{{ text('usersAsset') }} : </strong>{{ userStateCalculation.Asset }}</p>
+        <p><strong>{{ text('usersIdle') }} : </strong>{{ userStateCalculation.idle }}</p>
+        <p><strong>{{ text('highestScore') }} : </strong> 
             <span v-for="users in usersScore" :key="users.id"> 
-                User : <strong>{{ users.firstName }} </strong> points: <strong>{{ users.points }}</strong>
+                {{ text('User') }} : <strong>{{ users.firstName }} </strong> {{ text('points') }} : <strong>{{ users.points }}</strong>
             </span>
         </p>
 
@@ -62,25 +67,25 @@
     </section>
     <section class="users">
         <div v-if="usersFiltersCurrentOrder.length === 0">
-            <p><strong>Users not found</strong></p>
+            <p><strong>{{ text('usersNotFound') }}</strong></p>
         </div>
         <div v-else>
             <div v-if="toggleView">
                 <div class=" bg-cyan-100 m-5 p-5 " v-for="user in usersFiltersCurrentOrder"
                 :key="user.id">
-                    <p><strong>{{ user.firstName }} {{ user.lastName }}</strong></p>
+                    <p><strong> {{ text('fullName') }} :  {{ user.firstName }} {{ user.lastName }}</strong></p>
                     <hr>
                     <div class="flex p-3">
                         <div >
-                            <p><strong>Edad : </strong>{{ user.age }}</p>
-                            <p><strong>Ciudad : </strong>{{ user.address.country }}</p>
-                            <p><strong>Email : </strong>{{ user.email }}</p>
-                            <p><strong>Phone : </strong>{{ user.phone }}</p>
+                            <p><strong>{{ text('age') }} : </strong>{{ user.age }}</p>
+                            <p><strong>{{ text('city') }} : </strong>{{ user.address.country }}</p>
+                            <p><strong>{{ text('email') }} : </strong>{{ user.email }}</p>
+                            <p><strong>{{ text('phone') }} : </strong>{{ user.phone }}</p>
                         </div>
                         <div class="ms-5">
-                            <p><strong>Role : </strong>{{ user.role }}</p>
-                            <p><strong>Points : </strong>{{ user.points }}</p>
-                            <p><strong >State : </strong> <strong :class="(user.state === 'Asset' ? ' text-green-700' : ' text-red-700')">{{ user.state }}</strong></p>
+                            <p><strong>{{ text('role') }} : </strong>{{ user.role }}</p>
+                            <p><strong>{{ text('points') }} : </strong>{{ user.points }}</p>
+                            <p><strong >{{ text('state') }} : </strong> <strong :class="(user.state === 'Asset' ? ' text-green-700' : ' text-red-700')">{{ user.state }}</strong></p>
                         </div>                
                     </div>
                 </div>            
@@ -89,14 +94,14 @@
                 <table>
                     <thead>
                         <tr>                            
-                            <th><strong>Nombre Completo: </strong></th>
-                            <th><strong>Edad: </strong></th>
-                            <th><strong>Ciudad: </strong></th>
-                            <th><strong>Email: </strong></th>
-                            <th><strong>Phone: </strong></th>
-                            <th><strong>Role: </strong></th>
-                            <th><strong>Points: </strong></th>
-                            <th><strong >State: </strong></th>
+                            <th><strong>{{ text('fullName') }} : </strong></th>
+                            <th><strong>{{ text('age') }} : </strong></th>
+                            <th><strong>{{ text('city') }} : </strong></th>
+                            <th><strong>{{ text('email') }} : </strong></th>
+                            <th><strong>{{ text('phone') }} : </strong></th>
+                            <th><strong>{{ text('role') }} : </strong></th>
+                            <th><strong>{{ text('points') }} : </strong></th>
+                            <th><strong>{{ text('state') }} : </strong></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -120,6 +125,7 @@
     </section>
 
 </template>
+
 
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue';
@@ -247,6 +253,73 @@ watch(toggleView, (view) => {
 })
 
 
+const language = ref('es')
+
+const analysis  = {
+  es: {
+    TableVisualization: "Visualización en tablas",
+    BusinessCards: "presentación en Tarjetas ",
+    User: "Usuario",
+    points: "Puntos",
+    selectOption: "Seleccionar opción",
+    searchUser: "Buscar usuario",
+    inputSearchUser : "Ingrese el nombre completo",
+    searchCountry: "Buscar por País",
+    searchState: "Buscar por Estado",
+    standardFilter: "Filtro estándar",
+    ascFilter: "Orden Ascendente",
+    descFilter: "Orden Descendente",
+    avgScore: "Promedio puntuación",
+    usersAsset: "Usuarios Activos",
+    usersIdle: "Usuarios Inactivos",
+    highestScore: "Usuario con mayor puntuación",
+    usersNotFound: "Usuarios no encontrados",
+    fullName: "Nombre Completo",
+    age: "Edad",
+    city: "Ciudad",
+    email: "Email",
+    phone: "Teléfono",
+    role: "Rol",
+    points: "Puntos",
+    state: "Estado"
+  },
+
+  en: {
+    TableVisualization: "Table Visualization",
+    BusinessCards: "Business Cards ",
+    User: "User",
+    points: "points",
+    searchUser: "Search user",
+    selectOption: "Select option",
+    inputSearchUser : "Enter full name",
+    searchCountry: "Search by country",
+    searchState: "Search by state",
+    standardFilter: "Standard filter",
+    ascFilter: "Ascending order",
+    descFilter: "Descending order",
+    avgScore: "Average score",
+    usersAsset: "Active users",
+    usersIdle: "Inactive users",
+    highestScore: "User with highest score",
+    usersNotFound: "Users not found",
+    fullName: "Full Name",
+    age: "Age",
+    city: "City",
+    email: "Email",
+    phone: "Phone",
+    role: "Role",
+    points: "Points",
+    state: "State"
+  }
+}
+
+function text(dato){
+  return analysis[language.value][dato]
+}
+
+function toggleLanguage(){
+  language.value = language.value === 'es' ? 'en' : 'es'
+}
 
 </script>
 
